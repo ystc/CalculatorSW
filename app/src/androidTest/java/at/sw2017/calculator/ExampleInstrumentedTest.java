@@ -2,12 +2,20 @@ package at.sw2017.calculator;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -23,4 +31,48 @@ public class ExampleInstrumentedTest {
 
         assertEquals("at.sw2017.calculator", appContext.getPackageName());
     }
+
+    @Rule
+    public ActivityTestRule<Calculator> newTestRule = new ActivityTestRule<>(Calculator.class);
+
+    @Test
+    public void testButtons() throws Exception{
+        for(int i = 0; i <= 0; i++){
+            onView(withText("+")).perform(click());
+            onView(withText("C")).perform(click());
+            onView(withText("-")).perform(click());
+            onView(withText("/")).perform(click());
+            onView(withText("*")).perform(click());
+            onView(withText("=")).perform(click());
+            onView(withText("1")).perform(click());
+            onView(withText("2")).perform(click());
+            onView(withText("3")).perform(click());
+            onView(withText("4")).perform(click());
+            onView(withText("5")).perform(click());
+            onView(withText("6")).perform(click());
+            onView(withText("7")).perform(click());
+            onView(withText("8")).perform(click());
+            onView(withText("9")).perform(click());
+            onView(withText("0")).perform(click());
+        }
+    }
+
+    @Test
+    public void testInputField(){
+        for(int i = 9; i >= 0; i--){
+            onView(withText(Integer.toString(i))).perform(click());
+        }
+        onView(withText("9876543210")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testClearButton(){
+        onView(withText("9")).perform(click());
+        onView(withText("C")).perform(click());
+
+        onView(withId(R.id.textView)).check(matches(withText("")));
+    }
 }
+
+
+
